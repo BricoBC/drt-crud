@@ -99,3 +99,66 @@ py manage.py makemigrations
 ```python
 py manage.py migrate
 ```
+
+# 4. Crear REST API
+## 4.1) Crear el archivo serializers.py en el proyecto
+```python
+from rest_framework import serializers
+from .models import Project
+#Se importa el modelo que se hizo
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project
+        fields = ('id', 'title', 'description', 'technology', 'created_at')
+        #Se pone todos los campos del modelo de Project
+        read_only_field = ('created_at',)
+        #Indico cuál campo no se puede hacer operación de actualizar o eliminar.
+```
+## 4.2) Crear el archivo api.py en el proyecto.
+```python
+from .models import Project
+from rest_framework import viewsets, permissions
+from .serializers import ProjectSerializer
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    queryset = Project.objects.all()
+    #Consulta todo los datos de una tabla.
+    permission_classes = [permissions.AllowAny]
+    # Tiene permiso cualquier client a los datos del servidor. 
+    serializer_class = ProjectSerializer
+    #Se importa el serializer que se hizo.
+```
+
+## 4.3) Crear las rutas
+Crear el archivo de urls.py en el proyecto
+```python
+from rest_framework import routers
+from .api import ProjectViewSet
+
+router = routers.DefaultRouter()
+#Crea las rutas del CRUD  
+
+router.register('api/projects', ProjectViewSet, 'projects' )
+#Recibe 3 parametros
+# La ruta: es api/projects
+#ViewSet de la app
+# Nombre a la ruta
+
+urlpatterns = router.urls
+#Se exporta la ruta para el proyecto pueda identificar la ruta
+```
+
+## 4.4) Extender la ruta al proyecto
+```python
+from django.contrib import admin
+from django.urls import path, include
+#Se importa include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('project.urls') )
+    #Se obtiene las rutas para el CRUD
+]
+```
+Ya sólo quedaria arrancar nuevamente el servidor.
