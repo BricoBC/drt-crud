@@ -42,9 +42,22 @@ pip install django
 pip instal djangorestframework
 ```
 
+NOTA: Si usas vscode puedes hacer clic a la barra buscadora de hasta arriba y escribir ">python: Select interpret ", la das enter. Después seleccionas el entorno virtual que creaste.
+Esto te ayuda para que cuando abras una nueva terminal no tengas que activar el entorno a cada rato.
+
 # 2. Iniciar el proyecto de django
 ```python
 django-admin startproject drtcrud .
-# El proyecto se va a llamar drtcrud
+```
+El proyecto se va a llamar drtcrud
+
+## 2.1) Arrancar el servidor
+```python
+py manage.py runserver
 ```
 
+## 2.3) Crear app
+```python
+py manage.py startapp project
+```
+El proyecto se llama _project_
