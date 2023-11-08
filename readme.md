@@ -45,13 +45,15 @@ pip instal djangorestframework
 NOTA: Si usas vscode puedes hacer clic a la barra buscadora de hasta arriba y escribir ">python: Select interpret ", la das enter. Después seleccionas el entorno virtual que creaste.
 Esto te ayuda para que cuando abras una nueva terminal no tengas que activar el entorno a cada rato.
 
-# 2. Iniciar el proyecto de django
+# 2. Configuración del proyecto
+
+# 2.1) Iniciar el proyecto de django
 ```python
 django-admin startproject drtcrud .
 ```
 El proyecto se va a llamar drtcrud
 
-## 2.1) Arrancar el servidor
+## 2.2) Arrancar el servidor
 ```python
 py manage.py runserver
 ```
@@ -61,3 +63,39 @@ py manage.py runserver
 py manage.py startapp project
 ```
 El proyecto se llama _project_
+
+Se va a añadir la nueva app y el módulo al proyecto, recordando que es ir al archivo de settings.py del proyecto y agregarlo en _INSTALLED_APP_ para que quede de la siguiente forma:
+```python
+...   
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'project',
+    'rest_framework',
+]
+...
+```
+# 3. Modelos
+Recordando que el modelo hace referencia a la tabla de la base de datos, entonces hay que continuar creando la tabla:
+## 3.1) Crear tabla
+```python
+from django.db import models
+
+# Tabla Project
+class Project(models.Model):
+    #Campos
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    technology = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now=True)
+```
+
+## 3.2) Ejecutar las compilaciones
+Esto compila las tablas
+```python
+py manage.py makemigrations
+```
+
+## 3.3) Crear las tablas compiladas
+```python
+py manage.py migrate
+```
