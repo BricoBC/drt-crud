@@ -41,3 +41,10 @@ pip install django
 ```python
 pip instal djangorestframework
 ```
+
+# 2. Iniciar el proyecto de django
+```python
+django-admin startproject drtcrud .
+# El proyecto se va a llamar drtcrud
+```
+
