@@ -251,7 +251,7 @@ En Environment Variables agregar las siguientes variables:
 | `DATABASE_URL` | De la base de datos creada copiar en donde dice **Internal Database URL.** |
 | `PYTHON` | Poner la versión que se uso en el proyecto |
 
-
+Existe un tutorial ya hecho aunque ahí en vez de usar pip utilizan poetry, dejo a continuación el [tutorial](https://render.com/docs/deploy-django)
 
 # Autor
 
