@@ -166,12 +166,12 @@ Ya sólo quedaria arrancar nuevamente el servidor.
 ## 5. Desplegar el REST API
 Para hacer el despliegue se va a utilizar el sitio de **[render.com](https://dashboard.render.com/)**.
 1. Hacer un archivo .gitignore para el ____pycache____, carpeta venv (entorno virtual), db.sqlite3 (base de datos).
-4. Crear base de datos en render.com (postgreSQL): 
+2. Crear base de datos en render.com (postgreSQL): 
 
 Los datos que ingrese fue **name y database**, los demás como lo son __user, region, postgreSQL version, datadog__ no modifique nada.
 
 
-5. En el archivo settings.py agregar lo siguiente:
+3. En el archivo settings.py agregar lo siguiente:
 ```python
 from pathlib import Path
 import os
@@ -188,11 +188,11 @@ if RENDER_EXTERNAL_HOSTNAME:
 ...
 
 ```
-6. Instalar los siguiente modulos:
+4. Instalar los siguiente modulos:
 ```python
 pip install dj-database-url psycopg2-binary 'whitenoise[brotli]' gunicorn
 ```
-7. En settings agregar y reemplazar lo siguiente:
+5. En settings agregar y reemplazar lo siguiente:
 Agregar 
 ```python
 import os
@@ -221,13 +221,13 @@ DATABASES = {
 }
 ...
 ```
-8. Agregar archivo build.sh a la altura de manage.py y agregar el siguiente código.
+6. Agregar archivo build.sh a la altura de manage.py y agregar el siguiente código.
 ```bash
 #!/usr/bin/env bash
 # exit on error
 set -o errexit
 
-poetry install
+pip install -r requirements.txt
 
 python manage.py collectstatic --no-input
 python manage.py migrate
@@ -241,8 +241,8 @@ En el bash de git ejecutar el siguiente comando:
 chmod a+x build.sh
 ```
 
-9. Subir el proyeccto al repositorio de Github.
-11. Conectar el repositorio con render y agregar en los ajustes avanzados lo siguiente:
+7. Subir el proyeccto al repositorio de Github.
+8. Conectar el repositorio con render y agregar en los ajustes avanzados lo siguiente:
 En Environment Variables agregar las siguientes variables:
 
 |        Key     |Description                |
