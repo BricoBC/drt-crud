@@ -242,7 +242,7 @@ chmod a+x build.sh
 ```
 
 9. Subir el proyeccto al repositorio de Github.
-11. Conectar el repositorio con render y agregar ajustes avanzados:
+11. Conectar el repositorio con render y agregar en los ajustes avanzados lo siguiente:
 En Environment Variables agregar las siguientes variables:
 
 |        Key     |Description                |
@@ -251,9 +251,6 @@ En Environment Variables agregar las siguientes variables:
 | `PYTHON` | Poner la versión que se uso en el proyecto |
 
 
-- Key: 
-+ Value: 
-- 
 
 # Autor
 
