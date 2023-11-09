@@ -101,6 +101,7 @@ py manage.py migrate
 ```
 
 # 4. Crear REST API
+Dejo a continuación la documentación por si se necesita más detalle de alguna función [Django-rest-framework](https://www.django-rest-framework.org/#installation)
 ## 4.1) Crear el archivo serializers.py en el proyecto
 ```python
 from rest_framework import serializers
