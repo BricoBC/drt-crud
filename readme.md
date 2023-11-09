@@ -256,3 +256,5 @@ En Environment Variables agregar las siguientes variables:
 
 - [@BricoBC](https://github.com/BricoBC)
 - [Fazt](https://www.youtube.com/watch?v=GE0Q8YNKNgs&t=41s)
+
+Este repositorio fue basado con el vídeo de [DJANGO REST Framework, Tu primer REST API más despliegue](https://www.youtube.com/watch?v=GE0Q8YNKNgs&t=41s)
