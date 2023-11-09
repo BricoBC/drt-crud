@@ -162,3 +162,100 @@ urlpatterns = [
 ]
 ```
 Ya sólo quedaria arrancar nuevamente el servidor.
+
+## 5. Desplegar el REST API
+Para hacer el despliegue se va a utilizar el sitio de **[render.com](https://dashboard.render.com/)**.
+1. Hacer un archivo .gitignore para el ____pycache____, carpeta venv (entorno virtual), db.sqlite3 (base de datos).
+4. Crear base de datos en render.com (postgreSQL): 
+
+Los datos que ingrese fue **name y database**, los demás como lo son __user, region, postgreSQL version, datadog__ no modifique nada.
+
+
+5. En el archivo settings.py agregar lo siguiente:
+```python
+from pathlib import Path
+import os
+...
+SECRET_KEY = os.environ.get('SECRET_KEY', default='your secret key')
+...
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = 'RENDER' not in os.environ
+...
+ALLOWED_HOSTS = []
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+...
+
+```
+6. Instalar los siguiente modulos:
+```python
+pip install dj-database-url psycopg2-binary 'whitenoise[brotli]' gunicorn
+```
+7. En settings agregar y reemplazar lo siguiente:
+Agregar 
+```python
+import os
+import dj_database_url
+...
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    ...
+STATIC_URL = 'static/'
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+...
+```
+
+Reemplazar:
+```python
+...
+DATABASES = {
+    'default': dj_database_url.config(
+        default='sqlite:///db.sqlite3',
+        conn_max_age=600
+    )
+}
+...
+```
+8. Agregar archivo build.sh a la altura de manage.py y agregar el siguiente código.
+```bash
+#!/usr/bin/env bash
+# exit on error
+set -o errexit
+
+poetry install
+
+python manage.py collectstatic --no-input
+python manage.py migrate
+```
+En la terminal ejecutar el siguiente comando:
+```python
+pip freeze > requirements.txt
+```
+En el bash de git ejecutar el siguiente comando:
+```python
+chmod a+x build.sh
+```
+
+9. Subir el proyeccto al repositorio de Github.
+11. Conectar el repositorio con render y agregar ajustes avanzados:
+En Environment Variables agregar las siguientes variables:
+
+|        Key     |Description                |
+| :------------- |:------------------------- |
+| `DATABASE_URL` | De la base de datos creada copiar en donde dice **Internal Database URL.** |
+| `PYTHON` | Poner la versión que se uso en el proyecto |
+
+
+- Key: 
++ Value: 
+- 
+
+# Autor
+
+- [@BricoBC](https://github.com/BricoBC)
+- [Fazt](https://www.youtube.com/watch?v=GE0Q8YNKNgs&t=41s)
